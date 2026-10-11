@@ -42,15 +42,15 @@ test("repeated purchases never overspend and costs rise", () => {
   assert.equal(buyTender(s, -1), false);
   assert.equal(buyImprovement(s, 99), false);
 });
-test("four-hour offline limit and backward clock high-water mark", () => {
+test("four-hour offline limit and clock rollback recovery", () => {
   const s = fresh(1000);
   s.tenders[0] = 2;
   assert.equal(advance(s, 1000 + OFFLINE_MS * 2), 14400);
   const now = s.savedAt;
   assert.equal(advance(s, now - 10000), 0);
-  assert.equal(s.savedAt, now);
-  assert.equal(advance(s, now), 0);
-  assert.equal(advance(s, now + 1000), 1);
+  assert.equal(s.savedAt, now - 10000);
+  assert.equal(advance(s, now - 9000), 1);
+  assert.equal(advance(s, now - 9000), 0);
 });
 test("save roundtrip accrues offline production once", () => {
   const s = fresh(1000);
@@ -124,4 +124,21 @@ test("keepsakes persist through saves and seasons without duplicates", () => {
     decode(JSON.stringify(s), s.savedAt)!.keepsakes,
     s.keepsakes,
   );
+});
+test("rekindle honors the offered reward while gathering continues and rejects invalid offers", () => {
+  const s = fresh();
+  s.glow = s.run = s.lifetime = 5000;
+  const offer = emberReward(s);
+  s.glow = s.run = s.lifetime = 20000;
+  assert.equal(rekindle(s, true, 3), false);
+  assert.equal(rekindle(s, true, 0.5), false);
+  assert.equal(rekindle(s, true, offer), true);
+  assert.equal(s.embers, 1);
+});
+test("a future-dated save grants no bonus but live automation resumes", () => {
+  const s = fresh(86400000);
+  s.tenders[0] = 1;
+  const restored = decode(JSON.stringify(s), 1000)!;
+  assert.equal(restored.glow, 0);
+  assert.equal(advance(restored, 2000), 0.5);
 });

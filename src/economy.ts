@@ -117,12 +117,18 @@ export function tapValue(s: State) {
       multiplier(s),
   );
 }
-export function rate(s: State) {
-  return bounded(
+export function productionMultiplier(s: State) {
+  return (
     s.improvements.reduce(
       (n, b, i) => (b ? n * IMPROVEMENTS[i].production : n),
-      s.tenders.reduce((n, q, i) => n + q * TENDERS[i].rate, 0),
-    ) * multiplier(s),
+      1,
+    ) * multiplier(s)
+  );
+}
+export function rate(s: State) {
+  return bounded(
+    s.tenders.reduce((n, q, i) => n + q * TENDERS[i].rate, 0) *
+      productionMultiplier(s),
   );
 }
 export function tenderCost(s: State, i: number) {
@@ -157,9 +163,18 @@ export function buyImprovement(s: State, i: number) {
 }
 export const emberReward = (s: State) =>
   Math.min(1e6 - s.embers, Math.floor(Math.sqrt(s.run / 5000)));
-export function rekindle(s: State, confirmed: boolean) {
-  const reward = emberReward(s);
-  if (!confirmed || reward < 1) return false;
+export function rekindle(
+  s: State,
+  confirmed: boolean,
+  reward = emberReward(s),
+) {
+  if (
+    !confirmed ||
+    !Number.isInteger(reward) ||
+    reward < 1 ||
+    reward > emberReward(s)
+  )
+    return false;
   const next = fresh(s.savedAt);
   next.embers = s.embers + reward;
   next.lifetime = s.lifetime;
@@ -223,7 +238,7 @@ export function advance(s: State, now: number) {
   const elapsed = Math.min(OFFLINE_MS, Math.max(0, now - s.savedAt));
   const amount = bounded((rate(s) * elapsed) / 1000);
   earn(s, amount);
-  s.savedAt = Math.max(now, s.savedAt);
+  s.savedAt = now;
   return amount;
 }
 const numeric = (x: unknown, max = LIMIT): x is number =>
@@ -290,6 +305,6 @@ export function format(n: number) {
   if (n >= 1e6) return (n / 1e6).toFixed(2) + "M";
   if (n >= 1e4) return (n / 1e3).toFixed(1) + "k";
   return new Intl.NumberFormat("en", {
-    maximumFractionDigits: n < 10 ? 1 : 0,
+    maximumFractionDigits: n < 10 ? 2 : 1,
   }).format(n);
 }

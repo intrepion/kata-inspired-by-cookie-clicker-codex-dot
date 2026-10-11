@@ -9,6 +9,7 @@ import {
   rekindle,
   emberReward,
   rate,
+  productionMultiplier,
   tapValue,
   tenderCost,
   format,
@@ -113,7 +114,7 @@ function render() {
   text("tap", format(tapValue(state)));
   text("season", String(state.seasons + 1).padStart(2, "0"));
   const total = state.tenders.reduce((a, b) => a + b, 0);
-  text("tender-total", `${total} tenders`);
+  text("tender-total", `${total} tender${total === 1 ? "" : "s"}`);
   text(
     "grove-note",
     total === 0
@@ -129,7 +130,7 @@ function render() {
     b.querySelector(".owned")!.textContent = `${state.tenders[i]} owned`;
     b.querySelector(".cost")!.textContent = `${format(cost)} glow`;
     b.querySelector(".yield")!.textContent =
-      `${format(TENDERS[i].rate * rateMultiplier())} glow / sec each`;
+      `${format(TENDERS[i].rate * productionMultiplier(state))} glow / sec each`;
   });
   [...el("improvements").children].forEach((item, i) => {
     const b = item as HTMLButtonElement;
@@ -153,20 +154,11 @@ function render() {
   text(
     "prestige-progress",
     reward > 0
-      ? `Ready to keep ${format(reward)} new ember${reward === 1 ? "" : "s"}.`
+      ? `Ready to keep ${reward.toLocaleString("en")} new ember${reward === 1 ? "" : "s"}.`
       : `${format(state.run)} / 5,000 season glow`,
   );
   el<HTMLProgressElement>("progress").value = Math.min(5000, state.run);
   el<HTMLButtonElement>("rekindle").disabled = reward < 1;
-}
-function rateMultiplier() {
-  return (
-    IMPROVEMENTS.reduce(
-      (n, u, i) => (state.improvements[i] ? n * u.production : n),
-      1,
-    ) *
-    (1 + state.embers * 0.1)
-  );
 }
 el("gather").onclick = () => {
   advance(state, Date.now());
@@ -182,18 +174,24 @@ el("gather").onclick = () => {
 };
 el("save").onclick = () => save();
 const dialog = el<HTMLDialogElement>("confirm");
+let offeredReward = 0;
 el("rekindle").onclick = () => {
   advance(state, Date.now());
   const reward = emberReward(state);
   if (reward < 1) return;
   text(
     "exchange",
-    `Keep ${format(reward)} new ember${reward === 1 ? "" : "s"}, for a total of ${format(state.embers + reward)}. Your gathering bonus becomes +${format((state.embers + reward) * 10)}%.`,
+    `Keep ${reward.toLocaleString("en")} new ember${reward === 1 ? "" : "s"}, for a total of ${(state.embers + reward).toLocaleString("en")}. Your gathering bonus becomes +${((state.embers + reward) * 10).toLocaleString("en")}%.`,
   );
+  offeredReward = reward;
+  dialog.returnValue = "cancel";
   dialog.showModal();
 };
 dialog.addEventListener("close", () => {
-  if (dialog.returnValue === "confirm" && rekindle(state, true)) {
+  if (
+    dialog.returnValue === "confirm" &&
+    rekindle(state, true, offeredReward)
+  ) {
     notify("A new season begins. Your light remembers.");
     save(false);
     render();

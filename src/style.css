@@ -652,3 +652,16 @@ dialog p {
     display: none;
   }
 }
+
+@media (max-width: 700px) {
+  header {
+    padding-inline: 16px;
+    gap: 8px;
+  }
+  .wordmark {
+    gap: 8px;
+  }
+  .rekindle-box {
+    min-width: 0;
+  }
+}
