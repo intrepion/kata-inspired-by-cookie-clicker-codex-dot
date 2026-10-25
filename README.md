@@ -28,3 +28,7 @@ npm audit --audit-level=high
 ```
 
 Pure TypeScript economy and save commands are tested through their public boundary with Node's built-in runner. TypeScript checks strict types; Vite builds the production artifact. GitHub Actions repeats these checks on pushes and PRs. See [QA evidence](docs/QA.md), [specification](docs/SPEC.md), [glossary](GLOSSARY.md), and [persistent contract](docs/adr/0001-local-seasons.md). Design choices were delegated by the user; no interactive interview occurred. Matt Pocock's local Grill with Docs, Domain Modeling, Implement, TDD and Code Review skills guided the documentation, domain seam and independent reviews.
+
+## Play online
+
+[Play the hosted game](https://intrepion.github.io/kata-inspired-by-cookie-clicker-codex-dot/)
