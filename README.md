@@ -32,3 +32,7 @@ Pure TypeScript economy and save commands are tested through their public bounda
 ## Play online
 
 [Play the hosted game](https://intrepion.github.io/kata-inspired-by-cookie-clicker-codex-dot/)
+
+## Arcade metadata
+
+See [docs/arcade-metadata.md](docs/arcade-metadata.md) for the game-owned manifest and screenshot provenance.
