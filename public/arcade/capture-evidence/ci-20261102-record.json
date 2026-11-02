@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "workflowCommit": "813ad53bc021393658f802b137a861d7b2d36c96",
+  "sourceCommit": "5ba124219c2d14ed43f3c37f9fdd6afbe4609754",
+  "runId": "41404864295",
+  "url": "http://127.0.0.1:4220/",
+  "inputs": {
+    "index.html": "cf98a3dcf2669844a5e22b57b9c5267c9e511a3684dea3aed2972c54d5ef503f",
+    "assets/index-Bu_PbwkI.js": "db1744e95011a3743041161a8b5252ec60ab92b6a6be30e7cea32cc2b4ef281e",
+    "assets/index-DjVPwRk-.css": "9ee7c26fcec7daeda3a2904668a45c9cf94f5ccc448463018d32bb2c2982551d"
+  },
+  "browser": "153.0.8010.12",
+  "viewport": {
+    "width": 1280,
+    "height": 1000
+  },
+  "screenshots": [
+    "lantern-orchard-01.png",
+    "lantern-orchard-02.png"
+  ]
+}

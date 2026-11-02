@@ -1,6 +1,47 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "gameId": "kata-inspired-by-cookie-clicker-codex-dot",
   "playUrl": "https://intrepion.github.io/kata-inspired-by-cookie-clicker-codex-dot/",
-  "screenshots": []
+  "screenshots": [
+    {
+      "path": "arcade/screenshots/ci-20261102-01.jpg",
+      "sha256": "472405defc1b0aa0b433f9b9b4a6768cd1d5accd6323e72eb47c6f38da867baa",
+      "alt": "Lantern Orchard gameplay, view 1",
+      "provenance": {
+        "kind": "ci_gameplay_capture",
+        "sourcePath": "arcade/capture-evidence/ci-20261102-01.png",
+        "sourceSha256": "df3e51e3790f7594cda39da024f580b67bb0fc03eac8fd57175492ffc89cde60",
+        "captureCommit": "5ba124219c2d14ed43f3c37f9fdd6afbe4609754",
+        "workflowRunId": "41404864295",
+        "inputHashes": {
+          "index.html": "cf98a3dcf2669844a5e22b57b9c5267c9e511a3684dea3aed2972c54d5ef503f",
+          "assets/index-Bu_PbwkI.js": "db1744e95011a3743041161a8b5252ec60ab92b6a6be30e7cea32cc2b4ef281e",
+          "assets/index-DjVPwRk-.css": "9ee7c26fcec7daeda3a2904668a45c9cf94f5ccc448463018d32bb2c2982551d"
+        },
+        "publishedFilesVerifiedAt": "2026-11-02T19:01:20Z",
+        "captureRecordPath": "arcade/capture-evidence/ci-20261102-record.json",
+        "captureRecordSha256": "2e9c38f10d831aaa5be879988b425f517947ec2358d9900283f01a3bb37b7fe7"
+      }
+    },
+    {
+      "path": "arcade/screenshots/ci-20261102-02.jpg",
+      "sha256": "b9b3b90672195f979239963e4e6df7594f45bb51e0c865b508b4db6cd1bbb26f",
+      "alt": "Lantern Orchard gameplay, view 2",
+      "provenance": {
+        "kind": "ci_gameplay_capture",
+        "sourcePath": "arcade/capture-evidence/ci-20261102-02.png",
+        "sourceSha256": "fd79df547ad91d4072c31ab82ceb773ba8a52f16ddbf56632b5a0f710d13a05f",
+        "captureCommit": "5ba124219c2d14ed43f3c37f9fdd6afbe4609754",
+        "workflowRunId": "41404864295",
+        "inputHashes": {
+          "index.html": "cf98a3dcf2669844a5e22b57b9c5267c9e511a3684dea3aed2972c54d5ef503f",
+          "assets/index-Bu_PbwkI.js": "db1744e95011a3743041161a8b5252ec60ab92b6a6be30e7cea32cc2b4ef281e",
+          "assets/index-DjVPwRk-.css": "9ee7c26fcec7daeda3a2904668a45c9cf94f5ccc448463018d32bb2c2982551d"
+        },
+        "publishedFilesVerifiedAt": "2026-11-02T19:01:20Z",
+        "captureRecordPath": "arcade/capture-evidence/ci-20261102-record.json",
+        "captureRecordSha256": "2e9c38f10d831aaa5be879988b425f517947ec2358d9900283f01a3bb37b7fe7"
+      }
+    }
+  ]
 }
